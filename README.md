@@ -15,7 +15,7 @@ The project includes the following dependencies:
 
 To use the ImGui in a CMake project one should copy the following files:
 
-* `3rdparty/imgui` - directory with ImGui headers copied from the original repository. This is not a git module, so the files are not updated automatically.
+* `3rdparty/imgui` - directory with ImGui headers copied from the original repository. This is a git submodule in this repository.
 * `cmake/imgui.cmake` - CMake module that defines variables `IMGUI_LIBRARIES` and `IMGUI_INCLUDE_DIR`.
 
 ## Environment Setup
@@ -65,9 +65,8 @@ git clone --recursive https://github.com/Postrediori/MinimalImGui.git
 Prepare build with CMake and build executables
 
 ```
-mkdir build
-cd build
-cmake ../
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release
 make
 make install
 ```
