@@ -8,12 +8,6 @@ macro(make_project_)
     endif ()
 
     project(${PROJECT} CXX)
-
-    if(MSVC)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
-    else ()
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -std=c++11")
-    endif ()
     
     if (NOT DEFINED HEADERS)
         file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
@@ -29,14 +23,24 @@ endmacro ()
 
 macro(make_executable)
     make_project_()
-    
     add_executable(${PROJECT} ${HEADERS} ${SOURCES})
+    make_project_options_()
     
-    set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/bundle/${PROJECT}")
+    set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/bundle")
     install(
         TARGETS ${PROJECT}
         DESTINATION ${CMAKE_INSTALL_PREFIX})
 endmacro()
+
+macro(make_project_options_)
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+        target_compile_options(${PROJECT} PUBLIC /Wall)
+    elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+        target_compile_options(${PROJECT} PUBLIC -Wall -Wextra -Wpedantic)
+    elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+        target_compile_options(${PROJECT} PUBLIC -Wall -Wextra -Wpedantic)
+    endif ()
+endmacro ()
 
 function(add_all_subdirectories)
     file(GLOB CHILDREN RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/*)
