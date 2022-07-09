@@ -79,10 +79,10 @@ Using `make install` will copy the executable to `bundle` directory:
 cd bundle
 
 # Example with OpenGL 2.0:
-./MinimalImGuiOpenGl2/MinimalImGuiOpenGl2
+./bundle/MinimalImGuiOpenGl2
 
 # Example with OpenGL 3.0:
-./MinimalImGuiOpenGl3/MinimalImGuiOpenGl3
+./bundle/MinimalImGuiOpenGl3
 ```
 
 ## TODO
